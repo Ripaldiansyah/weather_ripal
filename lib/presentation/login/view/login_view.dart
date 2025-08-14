@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:get/get.dart';
 import 'package:weather_ripaldiansyah/core.dart';
+import 'package:weather_ripaldiansyah/presentation/login/widget/field_login.dart';
 
 class LoginView extends StatelessWidget {
   const LoginView({super.key});
@@ -26,10 +27,6 @@ class LoginView extends StatelessWidget {
                     fit: BoxFit.none,
                   ),
                 ),
-                child: Column(children: [
-                          
-                        ],
-                      ),
               ),
               if (controller.isBlur.value)
                 Positioned.fill(
@@ -37,50 +34,36 @@ class LoginView extends StatelessWidget {
                       left: 0.0,
                       right: 0.0,
                       top: MediaQuery.of(context).size.height / 1.6,
+
                       child: BackdropFilter(
-                        filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                        filter: ImageFilter.blur(sigmaX: 35, sigmaY: 20),
                         child: Container(
-                          height: MediaQuery.of(context).size.height / 2,
                           decoration: BoxDecoration(
                             border: Border(
-                              top: BorderSide(width: 1.0, color: Colors.white),
+                              top: BorderSide(width: 1.4, color: Colors.white),
                             ),
-                            color: Colors.black.withAlpha(0),
+
+                            gradient: LinearGradient(
+                              begin: Alignment.bottomLeft,
+                              end: Alignment.topRight,
+                              colors: [
+                                primaryColor,
+                                primaryColor.withAlpha(160),
+                              ],
+                            ),
                             borderRadius: BorderRadius.only(
                               topLeft: Radius.circular(45.0),
                               topRight: Radius.circular(45.0),
                             ),
                           ),
                           child: Padding(
-                            padding: EdgeInsets.all(8.0),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                QTextField(
-                                  hintText: "Masukan Email",
-                                  value: null,
-                                  onChanged: (value) {},
-                                ),
-                                SizedBox(height: 20.0),
-                                QTextField(
-                                  hintText: "Masukan Password",
-                                  isObscure: true,
-                                  maxLines: 1,
-                                  suffixIcon: Icons.password,
-                                  value: null,
-                                  onChanged: (value) {},
-                                ),
-                                SizedBox(height: 20.0),
-                                // ElevatedButton(
-                                //   onPressed: () {
-                                //     controller.initializeData();
-                                //   },
-                                //   child: controller.isLoading.value
-                                //       ? CircularProgressIndicator()
-                                //       : Text("Login"),
-                                // ),
-                              ],
+                            padding: EdgeInsets.only(
+                              top: 20,
+                              bottom: 8,
+                              right: 20.0,
+                              left: 20.0,
                             ),
+                            child: FieldLogin(),
                           ),
                         ),
                       ),

@@ -10,7 +10,7 @@ class SplashScreenController extends GetxController {
 
   Future<void> initializeData() async {
     await Future.delayed(Duration(milliseconds: 3500), () {
-      Get.offAll(LoginView());
+      Get.offAll(() => LoginView());
     });
   }
 }

@@ -5,6 +5,7 @@ class HomePageController extends GetxController {
   final RxBool hasError = false.obs;
   final RxString errorMessage = "".obs;
   final RxInt counter = 0.obs;
+  final RxInt currentIndex = 0.obs;
 
   @override
   void onInit() {

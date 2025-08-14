@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class QTextField extends StatefulWidget {
   const QTextField({
@@ -66,7 +67,10 @@ class _QTextFieldState extends State<QTextField> {
 
   @override
   Widget build(BuildContext context) {
-    Widget icon = Icon(visible ? Icons.visibility_off : Icons.visibility);
+    Widget icon = Icon(
+      visible ? Icons.visibility_off : Icons.visibility,
+      color: Colors.white.withAlpha(100),
+    );
 
     if (widget.isObscure!) {
       if (visible) {
@@ -92,9 +96,19 @@ class _QTextFieldState extends State<QTextField> {
 
     return Container(
       margin: const EdgeInsets.only(bottom: 20.0),
+      decoration: BoxDecoration(
+        boxShadow: [
+          BoxShadow(color: Colors.black.withAlpha(100), blurRadius: 10),
+        ],
+      ),
       child: TextFormField(
-        controller: textEditingController, // Gunakan controller
+        controller: textEditingController,
         enabled: widget.isEnable,
+        style: TextStyle(
+          fontSize: 14,
+          color: Colors.white,
+          fontFamily: "SF Pro Display",
+        ),
         keyboardType: widget.isNumberOnly ?? false
             ? TextInputType.number
             : widget.isPhoneNumber ?? false
@@ -109,9 +123,11 @@ class _QTextFieldState extends State<QTextField> {
           errorText: widget.errorText,
           errorMaxLines: 2,
           hintText: widget.hintText,
+
           prefixIcon: widget.prefixIcon != null
-              ? Icon(widget.prefixIcon)
+              ? Icon(widget.prefixIcon, color: Colors.white)
               : null,
+
           suffixIcon: widget.isObscure!
               ? icon
               : widget.suffixIcon != null

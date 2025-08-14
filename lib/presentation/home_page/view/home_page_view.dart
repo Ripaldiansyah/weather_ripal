@@ -2,80 +2,79 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:weather_ripaldiansyah/core.dart';
 
+import '../widget/center_contained.dart';
+
 class HomePageView extends StatelessWidget {
   const HomePageView({super.key});
 
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(HomePageController());
-    
+
     return Obx(() {
-      if (controller.isLoading.value) {
-        return const Scaffold(
-          body: Center(
-            child: CircularProgressIndicator(),
-          ),
-        );
-      }
-
-      if (controller.hasError.value) {
-        return Scaffold(
-          body: Center(
-            child: Text("Error: ${controller.errorMessage.value}"),
-          ),
-        );
-      }
-
       return Scaffold(
-        appBar: AppBar(
-          title: const Text("HomePage"),
-          actions: const [],
+        body: IndexedStack(
+          index: controller.currentIndex.value,
+          children: [
+            Center(child: Text("Map Page")),
+            Center(child: Text("Add Page")),
+            Center(child: Text("List Page")),
+          ],
         ),
-        body: SingleChildScrollView(
-          padding: const EdgeInsets.all(20.0),
-          child: Column(
-            children: [
-              Text(
-                "UniqueID: ${UniqueKey()}",
-                style: const TextStyle(
-                  fontSize: 18.0,
-                ),
+        floatingActionButtonLocation: CenterContainedFabLocation(),
+        floatingActionButton: Stack(
+          alignment: Alignment.center,
+          children: [
+            Image.asset("assets/Subtract.png", fit: BoxFit.none),
+            FloatingActionButton(
+              onPressed: () {
+                controller.currentIndex.value = 1;
+              },
+              backgroundColor: Colors.white,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(99),
+                side: BorderSide(color: primaryColor, width: 1.5),
               ),
-              const SizedBox(
-                height: 12.0,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  IconButton(
-                    onPressed: () => controller.decrement(),
-                    icon: const Icon(Icons.remove, color: Colors.grey),
+              child: Icon(Icons.add, color: primaryColor, size: 40),
+            ),
+          ],
+        ),
+        bottomNavigationBar: BottomAppBar(
+          shape: AutomaticNotchedShape(RoundedRectangleBorder()),
+          notchMargin: 02,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                IconButton(
+                  icon: Image.asset(
+                    'assets/icons/map.png',
+                    width: 24,
+                    height: 24,
+                    color: controller.currentIndex.value == 0
+                        ? activeColor
+                        : Colors.grey,
                   ),
-                  Obx(() => Text(
-                    "${controller.counter.value}",
-                    style: const TextStyle(
-                      fontSize: 20.0,
-                      color: Colors.grey,
-                    ),
-                  )),
-                  IconButton(
-                    onPressed: () => controller.increment(),
-                    icon: const Icon(Icons.add, color: Colors.grey),
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 12.0,
-              ),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.black,
-                  foregroundColor: Colors.white,
+                  onPressed: () {
+                    controller.currentIndex.value = 0;
+                  },
                 ),
-                onPressed: () => controller.initializeData(),
-                child: const Text("Reload"),
-              ),
-            ],
+                IconButton(
+                  icon: Image.asset(
+                    'assets/icons/list.png',
+                    width: 24,
+                    height: 24,
+                    color: controller.currentIndex.value == 2
+                        ? activeColor
+                        : Colors.grey,
+                  ),
+                  onPressed: () {
+                    controller.currentIndex.value = 2;
+                  },
+                ),
+              ],
+            ),
           ),
         ),
       );

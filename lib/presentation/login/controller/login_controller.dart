@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:weather_ripaldiansyah/presentation/home_page/view/home_page_view.dart';
 
 class LoginController extends GetxController {
   final RxBool isBlur = false.obs;
@@ -14,7 +15,11 @@ class LoginController extends GetxController {
 
   Future<void> initializeData() async {
     isBlur.value = false;
-    await Future.delayed(const Duration(seconds: 2));
+    await Future.delayed(const Duration(milliseconds: 500));
     isBlur.value = true;
+  }
+
+  void redirectToHome() {
+    Get.offAll(() => HomePageView());
   }
 }

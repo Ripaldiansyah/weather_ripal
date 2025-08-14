@@ -10,14 +10,14 @@ ThemeData getCustomeTheme() {
     colorScheme: ColorScheme.fromSeed(seedColor: primaryColor),
     appBarTheme: AppBarTheme(
       elevation: 0.0,
-      titleTextStyle: GoogleFonts.roboto(
-        fontSize: 14,
-        color: Colors.black,
-        fontWeight: FontWeight.bold,
+      titleTextStyle: TextStyle(
+        fontFamily: "SF Pro Display",
+        fontSize: 18,
+        color: Colors.white,
       ),
       backgroundColor: scaffoldBackgroundColor,
-      iconTheme: const IconThemeData(color: Colors.black),
-      actionsIconTheme: const IconThemeData(color: Colors.black),
+      iconTheme: const IconThemeData(color: Colors.white),
+      actionsIconTheme: const IconThemeData(color: Colors.white),
     ),
     bottomSheetTheme: BottomSheetThemeData(
       backgroundColor: Colors.white,
@@ -30,36 +30,43 @@ ThemeData getCustomeTheme() {
     ),
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
       unselectedItemColor: Colors.grey,
-      selectedItemColor: primaryColor,
+      backgroundColor: primaryColor,
+      selectedItemColor: Color(0xffc427fb),
       selectedLabelStyle: TextStyle(fontSize: 10),
       unselectedLabelStyle: TextStyle(fontSize: 10),
     ),
     iconTheme: IconThemeData(color: iconColor),
     textTheme: TextTheme(
-      titleSmall: GoogleFonts.roboto(color: textColor),
-      titleMedium: GoogleFonts.roboto(color: textColor),
-      titleLarge: GoogleFonts.roboto(
+      titleSmall: TextStyle(fontFamily: "SF Pro Display", color: textColor),
+      titleMedium: TextStyle(fontFamily: "SF Pro Display", color: textColor),
+      titleLarge: TextStyle(
+        fontFamily: "SF Pro Display",
         color: textColor,
         fontWeight: FontWeight.bold,
       ),
-      bodyLarge: GoogleFonts.roboto(color: textColor),
-      bodySmall: GoogleFonts.roboto(color: textColor),
-      bodyMedium: GoogleFonts.roboto(color: textColor),
+      bodyLarge: TextStyle(fontFamily: "SF Pro Display", color: textColor),
+      bodySmall: TextStyle(fontFamily: "SF Pro Display", color: textColor),
+      bodyMedium: TextStyle(fontFamily: "SF Pro Display", color: textColor),
     ),
     inputDecorationTheme: InputDecorationTheme(
-      fillColor: Color(0xffefefef),
+      fillColor: componentColor,
       filled: true,
-      hintStyle: GoogleFonts.inter(fontSize: 14, color: Colors.grey),
+      hintStyle: TextStyle(
+        fontFamily: "SF Pro Display",
+        fontSize: 14,
+        color: Colors.white.withAlpha(160),
+      ),
+
       enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.all(Radius.circular(14.0)),
-        borderSide: BorderSide(color: Color(0xffefefef), width: 1.2),
+        borderSide: BorderSide(color: borderColor, width: 1),
       ),
       disabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.all(Radius.circular(14.0)),
-        borderSide: BorderSide(color: Color(0xffefefef), width: 1.2),
+        borderSide: BorderSide(color: Color(0xffefefef), width: 1),
       ),
       focusedBorder: OutlineInputBorder(
-        borderSide: BorderSide(color: primaryColor, width: 1.2),
+        borderSide: BorderSide(color: Colors.white, width: 1.2),
         borderRadius: BorderRadius.all(Radius.circular(14.0)),
       ),
       errorBorder: const OutlineInputBorder(
@@ -84,35 +91,15 @@ ThemeData getCustomeTheme() {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(14.0)),
         ),
-        backgroundColor: Colors.blueGrey,
-        elevation: 0,
+        // shadowColor: Colors.black.withAlpha(100),
+        backgroundColor: componentColor,
+        elevation: 2,
       ),
     ),
     outlinedButtonTheme: OutlinedButtonThemeData(
       style: ElevatedButton.styleFrom(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
       ),
-    ),
-    dataTableTheme: DataTableThemeData(
-      dataTextStyle: TextStyle(color: textColor),
-      headingRowColor: WidgetStateProperty.resolveWith<Color>((
-        Set<WidgetState> states,
-      ) {
-        if (states.contains(WidgetState.selected)) {
-          return Colors.grey[200]!;
-        }
-        return Colors.grey[300]!;
-      }),
-      headingTextStyle: const TextStyle(),
-      dataRowColor: WidgetStateProperty.resolveWith<Color>((
-        Set<WidgetState> states,
-      ) {
-        if (states.contains(WidgetState.selected)) {
-          return Colors.grey[200]!;
-        }
-        return Colors.white;
-      }),
-      dataRowMinHeight: 48,
     ),
   );
 }
