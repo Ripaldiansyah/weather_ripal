@@ -24,7 +24,7 @@ class LoginView extends StatelessWidget {
                 decoration: BoxDecoration(
                   image: DecorationImage(
                     image: AssetImage("assets/background.png"),
-                    fit: BoxFit.none,
+                    fit: BoxFit.cover,
                   ),
                 ),
               ),
@@ -33,7 +33,7 @@ class LoginView extends StatelessWidget {
                       bottom: 0.0,
                       left: 0.0,
                       right: 0.0,
-                      top: MediaQuery.of(context).size.height / 1.6,
+                      top: MediaQuery.of(context).size.height / 1.5,
 
                       child: BackdropFilter(
                         filter: ImageFilter.blur(sigmaX: 35, sigmaY: 20),

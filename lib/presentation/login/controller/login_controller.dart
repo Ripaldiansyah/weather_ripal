@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:weather_ripaldiansyah/presentation/home_page/view/home_page_view.dart';
+import 'package:weather_ripaldiansyah/presentation/navigation/view/navigation_view.dart';
 
 class LoginController extends GetxController {
   final RxBool isBlur = false.obs;
@@ -20,6 +20,6 @@ class LoginController extends GetxController {
   }
 
   void redirectToHome() {
-    Get.offAll(() => HomePageView());
+    Get.offAll(() => NavigationView());
   }
 }

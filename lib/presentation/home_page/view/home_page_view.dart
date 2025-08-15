@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:weather_ripaldiansyah/core.dart';
-
-import '../widget/center_contained.dart';
+import 'package:weather_ripaldiansyah/presentation/home_page/widget/forecast_weather.dart';
+import 'package:weather_ripaldiansyah/presentation/home_page/widget/weather_information.dart';
 
 class HomePageView extends StatelessWidget {
   const HomePageView({super.key});
@@ -13,69 +13,123 @@ class HomePageView extends StatelessWidget {
 
     return Obx(() {
       return Scaffold(
-        body: IndexedStack(
-          index: controller.currentIndex.value,
+        body: Stack(
           children: [
-            Center(child: Text("Map Page")),
-            Center(child: Text("Add Page")),
-            Center(child: Text("List Page")),
-          ],
-        ),
-        floatingActionButtonLocation: CenterContainedFabLocation(),
-        floatingActionButton: Stack(
-          alignment: Alignment.center,
-          children: [
-            Image.asset("assets/Subtract.png", fit: BoxFit.none),
-            FloatingActionButton(
-              onPressed: () {
-                controller.currentIndex.value = 1;
-              },
-              backgroundColor: Colors.white,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(99),
-                side: BorderSide(color: primaryColor, width: 1.5),
+            Container(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage("assets/background.png"),
+                  fit: BoxFit.cover,
+                ),
               ),
-              child: Icon(Icons.add, color: primaryColor, size: 40),
+            ),
+            Center(
+              child: Container(
+                width: MediaQuery.of(context).size.width > 400
+                    ? 400
+                    : MediaQuery.of(context).size.width / 1.4,
+                height: MediaQuery.of(context).size.height / 3,
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage("assets/house.png"),
+                    fit: BoxFit.fill,
+                  ),
+                ),
+              ),
+            ),
+            Container(
+              width: MediaQuery.of(context).size.width,
+              padding: const EdgeInsets.only(top: 80),
+              child: Column(
+                children: [
+                  Expanded(child: WeatherInformation()),
+                  // Spacer(),
+                  Stack(
+                    children: [
+                      Container(
+                        height: controller.slider.value,
+                        decoration: BoxDecoration(
+                          border: Border(
+                            top: BorderSide(width: 1.4, color: Colors.white),
+                          ),
+                          gradient: LinearGradient(
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter,
+                            colors: [
+                              Color(0xff6e3681).withAlpha(250),
+                              primaryColor.withAlpha(240),
+                            ],
+                          ),
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(45.0),
+                            topRight: Radius.circular(45.0),
+                          ),
+                        ),
+                        child: Padding(
+                          padding: EdgeInsets.only(top: 10, bottom: 8),
+                          child: DefaultTabController(
+                            length: controller.menus.length,
+                            initialIndex: controller.selectedMenu.value,
+                            child: Scaffold(
+                              backgroundColor: Colors.transparent,
+                              appBar: TabBar(
+                                dividerColor: borderColor,
+
+                                tabs: [
+                                  Tab(
+                                    icon: Text(
+                                      "Hourly Forecast",
+                                      style: TextStyle(
+                                        fontSize: 14.0,
+                                        color: Color(0xffaca1ba),
+                                      ),
+                                    ),
+                                  ),
+                                  Tab(
+                                    icon: Text(
+                                      "Weekly Forecast",
+                                      style: TextStyle(
+                                        fontSize: 14.0,
+                                        color: Color(0xffaca1ba),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                                onTap: (index) {
+                                  controller.selectMenu(index);
+                                },
+                              ),
+                              body: ForecastWeather(controller: controller),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Positioned(
+                        top: -15,
+                        left: MediaQuery.of(context).size.width / 2 - 24,
+                        child: GestureDetector(
+                          onVerticalDragStart: (_) {
+                            controller.startDrag();
+                          },
+                          onVerticalDragUpdate: (details) {
+                            controller.updateSliderValue(
+                              details.localPosition.dy,
+                              MediaQuery.of(context).size.height / 2,
+                            );
+                          },
+                          child: Icon(
+                            Icons.horizontal_rule,
+                            size: 54.0,
+                            color: Color(0xff482760),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ],
-        ),
-        bottomNavigationBar: BottomAppBar(
-          shape: AutomaticNotchedShape(RoundedRectangleBorder()),
-          notchMargin: 02,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                IconButton(
-                  icon: Image.asset(
-                    'assets/icons/map.png',
-                    width: 24,
-                    height: 24,
-                    color: controller.currentIndex.value == 0
-                        ? activeColor
-                        : Colors.grey,
-                  ),
-                  onPressed: () {
-                    controller.currentIndex.value = 0;
-                  },
-                ),
-                IconButton(
-                  icon: Image.asset(
-                    'assets/icons/list.png',
-                    width: 24,
-                    height: 24,
-                    color: controller.currentIndex.value == 2
-                        ? activeColor
-                        : Colors.grey,
-                  ),
-                  onPressed: () {
-                    controller.currentIndex.value = 2;
-                  },
-                ),
-              ],
-            ),
-          ),
         ),
       );
     });
